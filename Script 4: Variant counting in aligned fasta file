@@ -1,0 +1,60 @@
+##### Opening files and creating a matrix with the aligned sequences of human, mouse and rat
+myfile = "HsaMmuRno_aln.txt"
+data = read.delim(myfile, header = FALSE, sep = "\t")
+rownames(data)= data[,1] 
+hsa = unlist(strsplit(as.character(data[1,2]), split=""))
+rno = unlist(strsplit(as.character(data[2,2]), split=""))
+mus = unlist(strsplit(as.character(data[3,2]), split=""))
+
+datam= matrix(NA, 3, length(hsa))
+datam[1,]= hsa
+datam[2,]= rno
+datam[3,]= mus
+
+rownames(datam)= c("hsa", "rno", "mus")
+##### Removing indels
+indels=c()
+for ( i in 1:ncol(datam)) {
+   x = datam[,i]
+   out=sum(x == "-") 
+   indels=c(indels,out)
+ }
+remove= which(indels > 0)
+datar= datam[,-remove]
+datam=datar
+rm(datar)
+##### Counting similarities and differences
+similarity_count= c ()
+for (i in 1:ncol(datam)){
+   h= datam[1,i]
+   r = datam[2,i]
+   m = datam[3,i]
+   q= c(h== r, h ==m, r==m)
+   out = sum(q)
+   similarity_count= c(similarity_count, out)
+ }
+novariance= sum(similarity_count== 3)
+[1] 255       #Nucleotides that don’t vary 
+unique= sum(similarity_count== 0)
+unique       #Unique variants [1] 8
+
+sharedrodent= 0
+mspecific= 0
+rspecific = 0
+for (i in 1:ncol(datam)) {
+   h= datam[1,i]
+   r = datam[2,i]
+   m = datam[3,i]
+   if (h != r & r == m )  { 
+     sharedrodent= sharedrodent+ 1   }
+   if (h != m & h == r )  { 
+     mspecific= mspecific + 1
+}
+   if (h != r & h == m )  { 
+     rspecific= rspecific + 1
+}
+} 
+##### Results
+ sharedrodent   	# Shared variants [1] 79
+ mspecific          	# Mouse Linage specific variants[1] 17
+ rspecific	                 # Rat Linage specific variants[1] 16
