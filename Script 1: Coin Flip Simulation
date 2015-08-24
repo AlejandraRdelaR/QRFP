@@ -1,0 +1,20 @@
+### heads= 1    tails=0
+p = 0.1 # biased coin
+N = 100   # 100 flips
+### 1 Using the sample function 
+flips = sample ( c(0,1), N , replace= T , prob= c(p, 1-p))
+totalheads = 0
+for ( i in flips) {if (i == 1) {totalheads= totalheads + 1}}
+phead= totalheads / length(flips)
+
+### Alternative: if you want to run the code with this option you have to replace “totalheads” for “ones” 
+
+flipsnames = sample (c("h", "t"), N, replace= T)
+ones = 0
+for ( name in flipsnames ) { if (name == "h"){ones= ones + 1 }}
+### 2 Creating the normal distribution
+distribution = rnorm (1000, 0.5, sd= 0.15)
+hist (distribution, main= "Is my coin biased?", xlab= "% heads of coin flips", ylab = "frecuency")
+abline( v= phead, lwd= 3, col= "red")
+abline( v= 0.5, lwd = 3, col="blue")
+
