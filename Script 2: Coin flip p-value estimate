@@ -1,0 +1,8 @@
+### 3  Calculating the p-value
+less= distribution < phead
+sumaless= sum(less)
+percent = sumaless/ length(distribution)
+if (percent <= 0.5){ pval = percent } 
+else { pval = 1-percent  }
+if ( pval < 0.05 ) { print ( "my coin is biased")}
+else { print("my coin is not biased")
