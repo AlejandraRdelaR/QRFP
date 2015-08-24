@@ -1,0 +1,19 @@
+library(ape)
+QRFP_aln = read.FASTA("Primates_fasta_aln.txt") 
+##### Protein Alignment, with MUSCLE, by TranslatorX, and back to nucleotides
+
+dist = dist.dna(QRFP_aln, model = "K80")
+##### dist.dna() : This function computes a matrix of pairwise distances from DNA sequences using a model of DNA evolution.
+
+##### K80: The distance derived by Kimura (1980), considers two kinds of substitutions with different probabilities: transitions (A <-> G, C <-> T), and transversions (A <-> C, A <-> T, C <-> G, G <-> T). 
+
+tree = nj(dist)
+##### This function performs the neighbor-joining tree estimation of Saitou and Nei. nj(x),  x = a dis-tance matrix 
+plot(tree, cex = 0.5)
+write.tree(tree, file = "QFRP_NJTreePRIMATES.tree")
+##### This function writes in a file a tree in parenthetic format using the Newick (also known as New Hampshire) format.
+
+tree = bionj(dist)
+##### BIONJ: an improved version of the NJ algorithm based on a simple model of sequence data.
+plot(tree, cex = 0.5)
+write.tree(tree, file = "QFRP_BIONJTreePRIMATES.tree")
