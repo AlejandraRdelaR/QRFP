@@ -56,5 +56,5 @@ for (i in 1:ncol(datam)) {
 } 
 ##### Results
  sharedrodent   	# Shared variants [1] 79
- mspecific          	# Mouse Linage specific variants[1] 17
- rspecific	                 # Rat Linage specific variants[1] 16
+ mspecific        # Mouse Linage specific variants[1] 17
+ rspecific	      # Rat Linage specific variants[1] 16
